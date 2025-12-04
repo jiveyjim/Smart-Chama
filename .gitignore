@@ -3,13 +3,7 @@ __pycache__/
 *.pyc
 
 # Virtual environment
-.venv/
-
-# Django
-db.sqlite3
-/media/
-staticfiles/
-.env
+.smartchamavenv/
 
 # VS Code
 .vscode/
