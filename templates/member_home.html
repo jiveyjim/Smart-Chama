@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Member Dashboard - Smart Chama</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="navbar">
+    <a href="member_home.html">Home</a>
+    <a href="deposit.html">Deposit</a>
+    <a href="withdraw.html">Withdraw</a>
+    <a href="members_list.html">Members</a>
+    <a href="statements.html">Statements</a>
+    <a href="withdrawal_timeline.html">Withdrawal Timeline</a>
+    <a href="admin_login.html" style="float:right;">Admin</a>
+</div>
+   
+
+<h2>Welcome, {{ member.full_name }}</h2>
+
+<p><strong>Email:</strong> {{ member.email }}</p>
+<p><strong>Phone:</strong> {{ member.phone_number }}</p>
+<p><strong>National ID:</strong> {{ member.idNumber }}</p>
+<div class="container">
+    <h2>Member Dashboard</h2>
+
+    <h3>Announcements</h3>
+    <p>No announcements available.</p>
+</div>
+
+</body>
+</html>
