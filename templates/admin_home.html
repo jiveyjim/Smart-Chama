@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="static/css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Smart Chama Admin</div>
+        <ul>
+            <li><a href="{% url 'admin_members'%}">Members</a></li>
+            <li><a href="{% url 'admin_announcement'%}">Announcements</a></li>
+            <li><a href="{% url 'admin_email'%}">Email Members</a></li>
+            <li><a href="{% url 'logout'%}">Logout</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+
+        <p class="subtitle">Welcome, Admin. Use the navbar to manage the system.</p>
+    </div>
+</body>
+</html>

@@ -66,4 +66,38 @@ def member_home_page(request):
 
 def logout(request):
     request.session.flush() #this clears all session data
-    return redirect('login')
+    return redirect('index')
+
+
+def admin_announcement(request):
+    return render(request, 'admin_announcement.html')
+
+def admin_email(request):
+    return render(request, 'admin_email.html')
+
+def admin_home(request):
+    return render(request, 'admin_home.html')
+
+def admin_login(request):
+    return render(request, 'admin_login.html')
+
+def admin_members(request):
+    return render(request, 'admin_members.html')
+
+def deposit(request):
+    return render(request, 'deposit.html')
+
+def withdraw(request):
+    return render(request, 'withdraw.html')
+
+def index(request):
+    return render(request, 'index.html')
+
+def member_list(request):
+    return render(request, 'member_list.html')
+
+def statements(request):
+    return render(request, 'statements.html')
+
+def withdrawal_timeline(request):
+    return render(request, 'withdrawal_timeline.html')

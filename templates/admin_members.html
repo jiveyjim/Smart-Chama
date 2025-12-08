@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Manage Members</title>
+    <link rel="stylesheet" href="static/css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Smart Chama Admin</div>
+        <ul>
+            <li><a href="{% url 'admin_home'%}">Dashboard</a></li>
+            <li><a href="{% url 'admin_announcement'%}">Announcements</a></li>
+            <li><a href="{% url 'admin_email'%}">Email Members</a></li>
+            <li><a href="{% url 'logout'%}">Logout</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Manage Members</h1>
+
+        <h3>Add New Member</h3>
+
+        <form>
+            <label>Full Name</label>
+            <input type="text">
+
+            <label>Phone Number</label>
+            <input type="text">
+
+            <label>Email</label>
+            <input type="email">
+
+            <label>ID Number</label>
+            <input type="text">
+
+            <button class="btn-primary" type="submit">Add Member</button>
+        </form>
+
+        <h3>Existing Members</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>ID</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Example Member</td>
+                    <td>0700000000</td>
+                    <td>example@gmail.com</td>
+                    <td>12345678</td>
+                    <td><button class="btn-danger">Remove</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</body>
+</html>

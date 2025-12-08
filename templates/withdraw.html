@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Withdraw Funds - Smart Chama</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="container">
+    <h2>Withdraw Funds</h2>
+
+    <p style="text-align:center; color:#444;">
+        Withdrawals are only allowed on your assigned withdrawal date.
+    </p>
+
+    <form>
+        <input type="number" placeholder="Enter amount to withdraw (KES)" required>
+        <button type="submit">Request Withdrawal</button>
+    </form>
+
+    <p style="text-align:center;">
+        <a href="{% url 'member_home'%}">Back to Home</a>
+    </p>
+</div>
+
+</body>
+</html>

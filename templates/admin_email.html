@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Email Members</title>
+    <link rel="stylesheet" href="static/css/styles.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">Smart Chama Admin</div>
+        <ul>
+            <li><a href="{% url 'admin_home'%}">Dashboard</a></li>
+            <li><a href="{% url 'admin_members'%}">Members</a></li>
+            <li><a href="{% url 'admin_announcement'%}">Announcements</a></li>
+            <li><a href="{% url 'logout'%}">Logout</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Email All Members</h1>
+
+        <form>
+            <label>Subject</label>
+            <input type="text">
+
+            <label>Message</label>
+            <textarea rows="7"></textarea>
+
+            <button class="btn-primary">Send Email</button>
+        </form>
+    </div>
+
+</body>
+</html>
