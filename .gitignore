@@ -1,9 +1,12 @@
 # Python
-#__pycache__/
-#*.pyc
+__pycache__/
+*.pyc
 
 # Virtual environment
-# smartchama/
+.smartchamavenv/
 
-# VS Codec
-#.vscode/ 
+# VS Code
+.vscode/ 
+
+# Database
+*.db.sqlite3
