@@ -1,9 +1,9 @@
 # Python
-#__pycache__/
-#*.pyc
+__pycache__/
+*.pyc
 
 # Virtual environment
-# smartchama/
+.smartchamavenv/
 
 # VS Codec
-#.vscode/ 
+.vscode/ 
