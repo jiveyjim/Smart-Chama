@@ -71,7 +71,6 @@ table th {
     background: #222;
     color: white;
     padding: 40px 20px 20px;
-    margin-top: 40px;
     
 }
 
@@ -155,6 +154,52 @@ table th {
     background-color: red;
     transform: scale(1.05);
 }
+.auth-container {
+    background: #fff;
+    padding: 200px 35px 200px 35px;
+    width: 360px;
+    border-radius: 12px;
+    border-left: 6px solid #00A651;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    margin: 0 auto;
+}
+.auth-container-signup {
+    background: #fff;
+    padding: 90px 35px 90px 35px;
+    width: 400px;
+    border-radius: 12px;
+    border-left: 6px solid #00A651;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    margin: 0 auto;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: #00A651;
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+
+}
+
+button:hover {
+    background: #008f45;
+}
+
+
 
 
 
