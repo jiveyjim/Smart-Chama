@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'base.html' %}
 {% load static %}
 
@@ -172,3 +173,26 @@
 
    
  {% endblock content %}
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Chama - Welcome</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Welcome to Smart Chama System</h1>
+    <p style="text-align:center;">Your modern solution for digital merry-go-round (Chama) management.</p>
+
+    <div style="text-align:center; margin-top:40px;">
+        <a href="{% url 'login'%}" class="btn">Login</a>
+        <a href="{% url 'signup'%}" class="btn">Register</a>
+    </div>
+</div>
+
+</body>
+</html>
+>>>>>>> c91a1984a3d335cfd1415b30c527d92c1568f37c

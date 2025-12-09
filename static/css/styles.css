@@ -7,6 +7,7 @@ body {
 }
 
 .container {
+<<<<<<< HEAD
     width: 100%;
     max-width: 1350px;
     margin: 2px auto;
@@ -15,15 +16,45 @@ body {
     box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
     border-radius: 8px;
 } 
+=======
+    width: 90%;
+    max-width: 1000px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}c
+>>>>>>> c91a1984a3d335cfd1415b30c527d92c1568f37c
 
 h1, h2, h3 {
     color: #333;
     text-align: center;
+<<<<<<< HEAD
     font-weight: bolder;
     padding-top: 10px;
 
 }
 
+=======
+}
+
+button, .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+}
+
+button:hover, .btn:hover {
+    background: #0056b3;
+}
+>>>>>>> c91a1984a3d335cfd1415b30c527d92c1568f37c
 
 /* ========= FORMS ========= */
 form {
@@ -46,7 +77,27 @@ form button {
     width: 100%;
 }
 
+<<<<<<< HEAD
 
+=======
+/* ========= NAVIGATION BAR ========= */
+.navbar {
+    background: #222;
+    padding: 15px;
+    color: #fff;
+    text-align: center;
+}
+
+.navbar a {
+    color: #fff;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+    color: #ffda79;
+}
+>>>>>>> c91a1984a3d335cfd1415b30c527d92c1568f37c
 
 /* ========= TABLES ========= */
 table {
@@ -65,6 +116,7 @@ table th {
     background: #007bff;
     color: white;
 }
+<<<<<<< HEAD
 
 /* FOOTER */
 .footer {
@@ -203,3 +255,5 @@ button:hover {
 
 
 
+=======
+>>>>>>> c91a1984a3d335cfd1415b30c527d92c1568f37c

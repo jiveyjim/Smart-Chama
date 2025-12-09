@@ -6,6 +6,7 @@
       <div class="auth-container-signup">
         <h2>Sign Up</h2>
         <form action="" method="post">
+<<<<<<< HEAD
             <label for="username">Full Name</label>
                <input type="text" placeholder="Full Name" required>
             <label for="email">Email Address</label>
@@ -18,7 +19,21 @@
                <input type="password" placeholder="Password" required>
             <label for="confirm_password">Re-enter Password</label>
                <input type="password" placeholder="Re-enter Password" required>
+=======
+            {% csrf_token%}
+            <input type="text" name="full_name" placeholder="Full Name" required>
+            <input type="email" name="email" placeholder="Email Address" required>
+            <input type="tel" name="phone_number" placeholder="Phone Number" required>
+            <input type="text" name="idNumber" placeholder="National ID" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="password" name="confirm_password" placeholder="Re-enter Password" required>
+>>>>>>> c91a1984a3d335cfd1415b30c527d92c1568f37c
             <button type="submit">Create Account</button>
+
+            {% if form.errors %}
+                <p style="color:red;">{{form.errors}}</p>
+            {% endif %}    
+
         </form>
       </div>
     {% endblock content %}

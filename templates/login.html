@@ -1,3 +1,4 @@
+<<<<<<< HEAD
  {% extends 'base.html' %}
   {% load static %}
 
@@ -10,6 +11,22 @@
           <input type="text" id="username" name="username" placeholder="Enter Username" required />
         <label for="password">Password</label>
           <input type="password" id="password" name="password" placeholder="Enter Password" required />
+=======
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+ </head>
+ <body>
+    <div class="login-container">
+<h2>Login</h2>
+<form method='POST'>
+   {% csrf_token %}
+<label for="username">Email or Phone Number</label>
+<input type="text" id="username" name="identifier" placeholder="Enter Email or Phone Number" required />
+>>>>>>> c91a1984a3d335cfd1415b30c527d92c1568f37c
 
 
        <button type="submit">Login</button>
