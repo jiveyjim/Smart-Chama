@@ -1,28 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Member Dashboard - Smart Chama</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
 
-<div class="navbar">
-    <a href="member_home.html">Home</a>
-    <a href="deposit.html">Deposit</a>
-    <a href="withdraw.html">Withdraw</a>
-    <a href="members_list.html">Members</a>
-    <a href="statements.html">Statements</a>
-    <a href="withdrawal_timeline.html">Withdrawal Timeline</a>
-    <a href="admin_login.html" style="float:right;">Admin</a>
-</div>
+{% extends 'base.html' %}
+{% load static %}
 
+ {% block content%}
+
+ <nav class="navbar">
+   <div class="logo">Smart Chama </div>
+     <ul>
+       <li><a href="member_home.html" id="btn-nav">Home</a></li>
+       <li><a href="deposit.html" id="btn-nav">Deposit</a></li>
+       <li><a href="withdraw.html" id="btn-nav">Withdraw</a></li>
+       <li><a href="members_list.html" id="btn-nav">Members</a></li>
+       <li><a href="statements.html" id="btn-nav">Statements</a></li>
+       <li><a href="withdrawal_timeline.html" id="btn-nav">Withdrawal Timeline</a></li>
+       <li><a href="{% url 'index' %}"  id="btn-nav">Log Out</a></li>
+     </ul>
+ </nav>
 <div class="container">
-    <h2>Member Dashboard</h2>
 
-    <h3>Announcements</h3>
-    <p>No announcements available.</p>
+ <h1>Member Dashboard</h1>
+
+ <div class="btn-div">
+    <button class="btn">Deposit</button> <button class="btn">Withdraw</button>
+ </div>
+ 
+<h2>Announcent</h2>
+
+<div class="announce">
+
 </div>
 
-</body>
-</html>
+</div>
+
+{% endblock content %}
+
+

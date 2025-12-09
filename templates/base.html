@@ -7,16 +7,42 @@
      {% load static %}
 
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/member_home.css' %}">
 </head>
 <body>
 
-<div class="navbar">
-    <a href="index.html">Home</a>
-    <a href="login.html">Login</a>
-    <a href="register.html">Register</a>
+<div class="container">
+    {% block content %}
+
+    {% endblock content %}
 </div>
 
-<div class="container">
-    <!-- CONTENT GOES HERE -->
-    {{ content }}
-</div>
+<footer class="footer">
+    <div class="footer-content">
+
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="login.html">Member Login</a></li>
+                <li><a href="register.html">Register</a></li>
+                <li><a href="admin_login.html">Admin Login</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h4>Contact Us</h4>
+            <p>P.O Box 15653-00503</p>
+            <p>Nairobi, Kenya</p>
+            <p>+254711642436</p>
+            <a href="mailto:info@smartchama.ac.ke">info@smartchama.ac.ke</a>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2025 Smart Chama System. All rights reserved.</p>
+    </div>
+</footer>
+</body>
+</html>
