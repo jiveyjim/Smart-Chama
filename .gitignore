@@ -7,3 +7,6 @@ __pycache__/
 
 # VS Codec
 .vscode/ 
+
+#Database
+*.db.sqlite3
