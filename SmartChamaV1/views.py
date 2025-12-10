@@ -50,6 +50,7 @@ def login(request):
                 messages.error(request,"Incorrect Password")           
 
     return render(request, 'login.html')
+
 def forget_password(request):
     return render(request, 'forget password.html')
 

@@ -1,3 +1,40 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+ {% block content%}
+
+ <nav class="navbar">
+   <div class="logo">Smart Chama </div>
+     <ul>
+       <li><a href="member_home.html" id="btn-nav">Home</a></li>
+       <li><a href="deposit.html" id="btn-nav">Deposit</a></li>
+       <li><a href="withdraw.html" id="btn-nav">Withdraw</a></li>
+       <li><a href="members_list.html" id="btn-nav">Members</a></li>
+       <li><a href="statements.html" id="btn-nav">Statements</a></li>
+       <li><a href="withdrawal_timeline.html" id="btn-nav">Withdrawal Timeline</a></li>
+       <li><a href="{% url 'index' %}"  id="btn-nav">Log Out</a></li>
+     </ul>
+ </nav>
+<div class="container">
+
+ <h1>Member Dashboard</h1>
+
+ <div class="btn-div">
+    <button class="btn">Deposit</button> <button class="btn">Withdraw</button>
+ </div>
+ 
+<h2>Announcent</h2>
+
+<div class="announce">
+
+</div>
+
+</div>
+
+{% endblock content %}
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -1,21 +1,174 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Smart Chama - Welcome</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
 
-<div class="container">
-    <h1>Welcome to Smart Chama System</h1>
-    <p style="text-align:center;">Your modern solution for digital merry-go-round (Chama) management.</p>
+ {% block content %}
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="logo">Smart Chama</div>
+        <ul>
+            <li><a href="login" id="btn-nav">Member Login</a></li>
+            <li><a href="register.html" id="btn-nav">Join Now</a></li>
+            <li><a href="admin_login.html" id="btn-nav">Admin</a></li>
+        </ul>
+    </nav>
 
-    <div style="text-align:center; margin-top:40px;">
-        <a href="{% url 'login'%}" class="btn">Login</a>
-        <a href="{% url 'signup'%}" class="btn">Register</a>
+
+    <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Smart Chama — Secure. Transparent. Fair.</h1>
+      <p>We are an established community savings group (chama) running daily collection cycles and fair disbursements. Smart Chama combines proven savings practices with a digital platform for trust, transparency and convenience.</p>
+
+      <div class="hero-buttons">
+        <a href="register.html" class="btn-primary">Become a Member</a>
+      </div>
+
+      <div class="hero-meta">
+        <div><strong>Members:</strong> 28</div>
+        <div><strong>Cycle:</strong> Daily contributions / Weekly payout</div>
+        <div><strong>Established:</strong> Jan 2019</div>
+      </div>
     </div>
-</div>
+  </section>
 
-</body>
-</html>
+  <!-- ABOUT -->
+  <section id="about" class="section section-about">
+    <div class="container">
+      <h2>About Smart Chama</h2>
+      <p class="lead">Smart Chama started in 2019 as a neighborhood savings group and has since built a disciplined, transparent, and technology-driven approach to collective saving. We combine group discipline with automated records and clear payout schedules so every member can trust the process.</p>
+
+      <div class="about-grid">
+        <div class="about-card">
+          <h3>Our Mission</h3>
+          <p>To empower members to save, access lump-sum capital, and achieve short-term and long-term financial goals through a transparent, auditable system.</p>
+        </div>
+        <div class="about-card">
+          <h3>Our Values</h3>
+          <ul>
+            <li>Transparency — open statements for every contribution</li>
+            <li>Fairness — strict withdrawal order and rules</li>
+            <li>Security — audited transaction records and backups</li>
+          </ul>
+        </div>
+        <div class="about-card">
+          <h3>Our Approach</h3>
+          <p>We record every deposit and withdrawal, publish periodic statements, and use an ordered timeline to determine payouts so members know who is next — always.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- HOW IT WORKS -->
+  <section id="how" class="section section-how">
+    <div class="container">
+      <h2>How Smart Chama Works</h2>
+
+      <ol class="how-list">
+        <li>
+          <h4>Join the Chama</h4>
+          <p>Register with your full name, phone, email and ID. New members join at the end of the current withdrawal queue.</p>
+        </li>
+
+        <li>
+          <h4>Daily Contribution</h4>
+          <p>Make your daily contribution using M-PESA STK push (or manual deposit) — every payment is recorded in the system.</p>
+        </li>
+
+        <li>
+          <h4>Withdrawal by Turn</h4>
+          <p>Withdraw only on your assigned date/turn. When you withdraw, you are moved to the back of the queue so everyone gets their turn.</p>
+        </li>
+
+        <li>
+          <h4>Full Transparency</h4>
+          <p>Statements show every deposit and withdrawal. Admin announcements and emails keep members informed of meetings and changes.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+
+  <!-- FEATURES / BENEFITS -->
+  <section id="features" class="section section-features">
+    <div class="container">
+      <h2>Features & Benefits</h2>
+
+      <div class="features-grid">
+        <div class="feature">
+          <h4>Automated Contributions</h4>
+          <p>Initiate deposits quickly via M-PESA and get instant confirmation in your statement.</p>
+        </div>
+
+        <div class="feature">
+          <h4>Strict Withdrawal Rules</h4>
+          <p>Only the scheduled member can withdraw on their date. This protects the group's fairness.</p>
+        </div>
+
+        <div class="feature">
+          <h4>Admin Controls</h4>
+          <p>Admin can add or remove members, post announcements, and send group emails — with full audit logs.</p>
+        </div>
+
+        <div class="feature">
+          <h4>Transparent Statements</h4>
+          <p>Every transaction is recorded with time, amount and MPESA transaction ID for full accountability.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials" class="section section-testimonials">
+    <div class="container">
+      <h2>Member Testimonials</h2>
+
+      <div class="testimonials-grid">
+        <blockquote class="testimonial">
+          <p>"Smart Chama made our saving reliable. I can see every payment and I always know when my turn will be. No more manual ledgers!"</p>
+          <footer>— Grace W., Member since 2020</footer>
+        </blockquote>
+
+        <blockquote class="testimonial">
+          <p>"We stopped losing records and late payments. The admin announcements and timelines keep everyone disciplined."</p>
+          <footer>— Peter N., Treasurer</footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FAQ -->
+  <section id="faq" class="section section-faq">
+    <div class="container">
+      <h2>Frequently Asked Questions</h2>
+
+      <div class="faq-item">
+        <h4>Who can withdraw?</h4>
+        <p>The member whose position is first in the withdrawal timeline and whose scheduled date it is. The system enforces this rule.</p>
+      </div>
+
+      <div class="faq-item">
+        <h4>How are new members placed in the timeline?</h4>
+        <p>New members are added to the end of the queue. Admin adding members will automatically update the positions.</p>
+      </div>
+
+      <div class="faq-item">
+        <h4>What happens after a member withdraws?</h4>
+        <p>They are moved to the back of the queue and their withdrawal is recorded as a transaction for audit purposes.</p>
+      </div>
+    </div>
+  </section>
+
+
+      
+  <div class="join">
+        <h3>Ready to join Smart Chama?</h3>
+        <p class="join-p">Sign up and start contributing today — or contact the admin for group-specific arrangements.</p>
+        <center><a href="register.html" class="btn-primary-large">Register as a Member</a></center>
+  </div>
+
+
+   
+ {% endblock content %}
