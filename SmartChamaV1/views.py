@@ -19,11 +19,6 @@ def signup(request):
     return render(request, 'signup.html',{'form':form})
 
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> recovered-work
 def login(request):
     if request.method == 'POST':
         identifier = request.POST.get('identifier')  # Email or Phone Number
@@ -109,8 +104,4 @@ def statements(request):
     return render(request, 'statements.html')
 
 def withdrawal_timeline(request):
-<<<<<<< HEAD
     return render(request, 'withdrawal_timeline.html')
-=======
-    return render(request, 'withdrawal_timeline.html')
->>>>>>> recovered-work
