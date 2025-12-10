@@ -16,3 +16,8 @@ class MemberForm(forms.ModelForm):
 
         if password != confirm_password:
             raise forms.ValidationError("Passwords do not match!!")    
+        
+
+class PaymentForm(forms.Form):
+    phone_number = forms.CharField(label='Phone Number', max_length=15)
+    amount = forms.IntegerField(label='Amount', min_value=1)

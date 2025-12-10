@@ -1,25 +1,28 @@
+{% load bootstrap5 %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Deposit Funds - Smart Chama</title>
-    <link rel="stylesheet" href="styles.css">
+    {% bootstrap_css %}
 </head>
-<body>
-
-<div class="container">
-    <h2>Deposit Funds</h2>
-
-    <form>
-        <input type="number" placeholder="Enter amount to deposit (KES)" required>
-
-        <button type="submit">Deposit</button>
-    </form>
-
-    <p style="text-align:center;">
-        <a href="{% url 'member_home'%}">Back to Home</a>
-    </p>
-</div>
-
+<body class="d-flex align-items-center justify-content-center vh-100 bg-light">
+    <div class="card p-4 shadow-sm" style="width: 100%;max-width: 500px;">
+        <h3 class="text-center mb-4">Make a Payment</h3>
+        {% if error_message%}
+        
+        <div class="alert alert-danger">{{error_message}}</div>
+        {%endif%}
+        <form method="post" class="needs-validation" novalidate>
+            {% csrf_token %}
+            {%for field in form%}
+            <div class="mb-3">
+                {% bootstrap_field field %}
+            </div>
+            {%endfor%}
+            <button type="submit" class="btn btn-primary w-100">Pay Now</button>
+        </form>
+    </div>
+    {% bootstrap_javascript %}
 </body>
 </html>
