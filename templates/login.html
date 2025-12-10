@@ -1,28 +1,33 @@
- {% load static %}
-<!DOCTYPE html>
- <html lang="en">
- <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-       <link rel="stylesheet" href="{% static 'SmartChamaV1/login.css' %}">
+ {% extends 'base.html' %}
+  {% load static %}
 
- </head>
- <body>
-    <div class="login-container">
-<h2>Login</h2>
-<form method='POST'>
-   {% csrf_token %}
-<label for="username">Email or Phone Number</label>
-<input type="text" id="username" name="identifier" placeholder="Enter Email or Phone Number" required />
+   {% block content %}
+
+   
+
+    <div class="auth-container">
+     <h2>Login</h2>
+      <form method='POST'>
+        {% csrf_token %}
+
+        {% if messages %}
+            <ul class="messages">
+               {% for message in messages %}
+                  <li class="{{ message.tags }}"style="color: red;">{{ message }}</li>
+               {% endfor %}
+            </ul>
+        {% endif %}
+
+        <label for="username">Email or Phone Number</label>
+          <input type="text" id="username" name="identifier" placeholder="Enter Email or Phone Number" required />
+        <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Enter Password" required />
 
 
-<label for="password">Password</label>
-<input type="password" id="password" name="password" placeholder="Enter Password" required />
-
-
-<button type="submit">Login</button>
-</form>
-</div>
- </body>
- </html>
+       <button type="submit">Login</button>
+      </form>
+      <br>
+      <p>Don't have an account? <a href="{% url 'signup' %}">Sign up</a></p>
+      <a href="{% url 'forget password' %}">Forgot your password?</a>
+    </div>
+   {% endblock content %}

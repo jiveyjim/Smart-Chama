@@ -5,8 +5,15 @@ __pycache__/
 # Virtual environment
 .smartchamavenv/
 
+<<<<<<< HEAD
 # VS Code
 .vscode/ 
 
 # Database
+=======
+# VS Codec
+.vscode/ 
+
+#Database
+>>>>>>> recovered-work
 *.db.sqlite3

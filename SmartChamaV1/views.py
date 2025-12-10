@@ -19,22 +19,25 @@ def signup(request):
     return render(request, 'signup.html',{'form':form})
 
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> recovered-work
 def login(request):
-    if request.method=='POST':
-        identifier=request.POST.get('identifier')#eEmail or Phone Number
-        password=request.POST.get('password')
+    if request.method == 'POST':
+        identifier = request.POST.get('identifier')  # Email or Phone Number
+        password = request.POST.get('password')
 
-        member=None
-    #trying to log in with phone number
+        member = None
+
+        # Try login with email
         try:
-            member= ChamaMember.objects.get(email=identifier)
+            member = ChamaMember.objects.get(email=identifier)
         except ChamaMember.DoesNotExist:
             pass
 
-
-        #if email not used try phone number
+        # If not found, try phone number
         if member is None:
             try:
                 member = ChamaMember.objects.get(phone_number=identifier)
@@ -42,12 +45,14 @@ def login(request):
                 member = None    
 
         if member:
-            if check_password(password,member.password):
-                request.session['member_id']=member.id
-                request.session['member_name']=member.full_name
-                return redirect('member_home') 
+            if check_password(password, member.password):
+                request.session['member_id'] = member.id
+                request.session['member_name'] = member.full_name
+                return redirect('member_home')
             else:
-                messages.error(request,"Incorrect Password")           
+                messages.error(request, "Incorrect password")
+        else:
+            messages.error(request, "Email or phone number not found")
 
     return render(request, 'login.html')
 
@@ -76,6 +81,9 @@ def admin_announcement(request):
 def admin_email(request):
     return render(request, 'admin_email.html')
 
+def base(request):
+    return render(request, 'base.html')
+
 def admin_home(request):
     return render(request, 'admin_home.html')
 
@@ -101,4 +109,8 @@ def statements(request):
     return render(request, 'statements.html')
 
 def withdrawal_timeline(request):
+<<<<<<< HEAD
     return render(request, 'withdrawal_timeline.html')
+=======
+    return render(request, 'withdrawal_timeline.html')
+>>>>>>> recovered-work

@@ -1,23 +1,24 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
-    <link rel="stylesheet" href="{% static 'SmartChamaV1/signup.css' %}">
-</head>
-<body>
-     <div class="container">
+{% extends 'base.html' %}
+  {% load static %}
+
+    {% block content %} 
+
+      <div class="auth-container-signup">
         <h2>Sign Up</h2>
         <form action="" method="post">
-            {% csrf_token%}
-            <input type="text" name="full_name" placeholder="Full Name" required>
-            <input type="email" name="email" placeholder="Email Address" required>
-            <input type="tel" name="phone_number" placeholder="Phone Number" required>
-            <input type="text" name="idNumber" placeholder="National ID" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <input type="password" name="confirm_password" placeholder="Re-enter Password" required>
+            {% csrf_token %}
+            <label for="username">Full Name</label>
+               <input type="text" name="full_name" placeholder="Full Name" required>
+            <label for="email">Email Address</label>
+               <input type="email" name="email" placeholder="Email Address" required>
+            <label for="phone">Phone Number</label>
+               <input type="tel" name="phone_number" placeholder="Phone Number" required><br><br>
+            <label for="national_id">National ID</label>
+               <input type="text" name="idNumber" placeholder="National ID" required>
+            <label for="password">Password</label>
+               <input type="password" name="password" placeholder="Password" required>
+            <label for="confirm_password">Re-enter Password</label>
+               <input type="password" name="confirm_password" placeholder="Re-enter Password" required>
             <button type="submit">Create Account</button>
 
             {% if form.errors %}
@@ -25,6 +26,5 @@
             {% endif %}    
 
         </form>
-    </div>
-</body>
-</html>
+      </div>
+    {% endblock content %}
