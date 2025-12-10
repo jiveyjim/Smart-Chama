@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import MemberForm
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password,check_password
-from .models import ChamaMember
+from .models import ChamaMember 
 
 def signup(request):
     if request.method=='POST':
