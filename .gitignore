@@ -12,4 +12,4 @@ __pycache__/
 *.db.sqlite3
 
 # Environment configuration file
-.env
+.envgit
