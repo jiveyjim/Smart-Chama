@@ -5,8 +5,5 @@ __pycache__/
 # Virtual environment
 .smartchamavenv/
 
-# VS Codec
+# VS Code
 .vscode/ 
-
-#Database
-*.db.sqlite3
