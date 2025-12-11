@@ -133,3 +133,11 @@ MPESA_PASSKEY = os.getenv('MPESA_PASSKEY')
 MPESA_ENVIRONMENT = os.getenv('MPESA_ENVIRONMENT')  # 'sandbox' or 'production'
 MPESA_CALLBACK_URL = os.getenv('MPESA_CALLBACK_URL')
 MPESA_BASE_URL= os.getenv('MPESA_BASE_URL')
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+DEFAULT_FROM_EMAIL = "Smart Chama <your_email@gmail.com>"
+
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "officialjamesmakori@gmail.com"   # Your Gmail
+EMAIL_HOST_PASSWORD = "qaws dazf iigx pzfg"  # Gmail App Password ONLY

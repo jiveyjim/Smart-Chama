@@ -9,6 +9,13 @@ import requests, base64, datetime,json,os
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse,HttpResponseBadRequest
 from dotenv import load_dotenv
+import uuid
+from django.core.mail import send_mail
+from django.conf import settings
+from django.utils.timezone import now, timedelta
+from django.db.models import Q 
+from django.contrib.auth.models import User
+
 
 load_dotenv()
 MPESA_CONSUMER_KEY = os.getenv('MPESA_CONSUMER_KEY')
@@ -19,55 +26,137 @@ MPESA_ENVIRONMENT = os.getenv('MPESA_ENVIRONMENT')  # 'sandbox' or 'production'
 MPESA_CALLBACK_URL = os.getenv('MPESA_CALLBACK_URL')
 MPESA_BASE_URL= os.getenv('MPESA_BASE_URL')
 
+# --------------------------
+# SIGN UP (REGISTRATION)
+# --------------------------
+
 def signup(request):
-    if request.method=='POST':
-        form =MemberForm(request.POST)
+    if request.method == 'POST':
+        form = MemberForm(request.POST)
         if form.is_valid():
             member = form.save(commit=False)
-            member.password= make_password(form.cleaned_data['password'])
+            member.password = make_password(form.cleaned_data['password'])
             member.save()
-            # messages.success(request, f'Acount created suessfully!')
             return redirect('login')
     else:
-        form=MemberForm()  
-
-    return render(request, 'signup.html',{'form':form})
-
+        form = MemberForm()
+    return render(request, 'signup.html', {'form': form})
+   
 
 def login(request):
     if request.method == 'POST':
-        identifier = request.POST.get('identifier')  # Email or Phone Number
+        identifier = request.POST.get('identifier')  # Email or phone
         password = request.POST.get('password')
 
-        member = None
+        if not identifier or not password:
+            messages.error(request, "Please enter both email/phone and password.")
+            return render(request, 'login.html')
 
-        # Try login with email
-        try:
-            member = ChamaMember.objects.get(email=identifier)
-        except ChamaMember.DoesNotExist:
-            member=None
+        # Prevent admin email from logging in here
+        if User.objects.filter(email=identifier, is_staff=True).exists():
+            messages.error(request, "This email belongs to an admin. Please use the admin login page.")
+            return render(request, 'login.html')
 
-        # If not found, try phone number
-        if member is None:
-            try:
-                member = ChamaMember.objects.get(phone_number=identifier)
-            except ChamaMember.DoesNotExist:
-                member = None    
+        # Try to find member by email or phone
+        member = ChamaMember.objects.filter(
+            Q(email=identifier) | Q(phone_number=identifier)
+        ).first()
 
         if member:
             if check_password(password, member.password):
+                # Save member info in session securely
                 request.session['member_id'] = member.id
                 request.session['member_name'] = member.full_name
+
+                # Redirect to member dashboard
                 return redirect('member_home')
             else:
-                messages.error(request, "Incorrect password")
+                messages.error(request, "Incorrect password.")
         else:
-            messages.error(request, "Email or phone number not found")
+            messages.error(request, "Email or phone number not found.")
 
     return render(request, 'login.html')
 
+
+
+# --------------------------
+# LOGOUT
+# --------------------------
+def logout(request):
+    request.session.flush()
+    return redirect('login')
+
+
+
+# --------------------------
+# FORGOT PASSWORD (Page Only For Now)
+# --------------------------
 def forget_password(request):
-    return render(request, 'forget password.html')
+    if request.method == "POST":
+        email = request.POST.get("email")
+
+        try:
+            member = ChamaMember.objects.get(email=email)
+        except ChamaMember.DoesNotExist:
+            messages.error(request, "This email is not registered.")
+            return render(request, "forget_password.html")
+
+        # Generate reset token
+        token = str(uuid.uuid4())
+        member.reset_token = token
+        member.reset_token_expiry = now() + timedelta(hours=1)  # Valid 1 hour
+        member.save() 
+
+        # RESET LINK
+        reset_link = request.build_absolute_uri(f"/reset_password/{token}/")
+
+        # SEND EMAIL
+        send_mail(
+            subject="Smart Chama - Reset Your Password",
+            message=f"Hello {member.full_name},\n\nClick the link below to reset your password:\n\n{reset_link}\n\nIf you did not request this, ignore this email.",
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[member.email],
+        )
+
+        messages.success(request, "A password reset link has been sent to your email.")
+        return redirect("login")
+
+    return render(request, "forget_password.html")
+
+
+def reset_password(request, token):
+    try:
+        member = ChamaMember.objects.get(reset_token=token)
+    except ChamaMember.DoesNotExist:
+        messages.error(request, "Invalid or expired token.")
+        return redirect("forget_password")
+
+    # Check expiry
+    if member.reset_token_expiry < now():
+        messages.error(request, "This link has expired. Request a new reset link.")
+        return redirect("forget_password")
+
+    # If POST → Save new password
+    if request.method == "POST":
+        new_password = request.POST.get("password")
+        confirm_password = request.POST.get("confirm_password")
+
+        if new_password != confirm_password:
+            messages.error(request, "Passwords do not match.")
+            return render(request, "reset_password.html")
+
+        # Save new password
+        member.password = make_password(new_password)
+        member.reset_token = None
+        member.reset_token_expiry = None
+        member.save()
+
+        messages.success(request, "Password reset successful. You can now log in.")
+        return redirect("login")
+
+    return render(request, "reset_password.html")
+
+
 
 
 def member_home_page(request):
