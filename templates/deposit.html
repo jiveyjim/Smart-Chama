@@ -22,13 +22,22 @@
     <h1>Make a Deposit</h1>
     <h2>Welcome, {{ member.full_name }}</h2>
 
+    {% if error %}
+        <p class="error-message">{{ error }}</p>
+    {% endif %}
+
+    {% if success %}
+        <p class="success-message">{{ success }}</p>
+    {% endif %}
+
     <div class="form-card">
         <form method="POST" action="{% url 'deposit' %}">
             {% csrf_token %}
             
             <div class="form-group">
                 <label for="amount">Deposit Amount (KES)</label>
-                <input type="number" id="amount" name="amount" placeholder="Enter deposit amount" required>
+                <input type="number" id="amount" name="amount"
+                       placeholder="Enter deposit amount" min="10" required>
             </div>
 
             <div class="form-group">
@@ -41,8 +50,15 @@
             </div>
 
             <div class="form-group">
-                <label for="transaction_id">Transaction ID (if applicable)</label>
-                <input type="text" id="transaction_id" name="transaction_id" placeholder="Enter transaction ID for M-PESA or leave blank for manual deposit">
+                <label for="phone_number">Phone Number (for STK)</label>
+                <input type="text" id="phone_number" name="phone_number"
+                       placeholder="07XXXXXXXX (only for M-PESA)">
+            </div>
+
+            <div class="form-group">
+                <label for="transaction_id">Transaction ID (optional)</label>
+                <input type="text" id="transaction_id" name="transaction_id"
+                       placeholder="Enter MPESA transaction code or leave blank">
             </div>
 
             <button type="submit" class="btn-primary">Submit Deposit</button>
@@ -51,11 +67,16 @@
 
     <div class="announce">
         <h3>Recent Deposits</h3>
+
         {% if recent_deposits %}
             <ul>
-                {% for deposit in recent_deposits %}
-                    <li>{{ deposit.date }} — KES {{ deposit.amount }} via {{ deposit.payment_method }}</li>
-                {% endfor %}
+            {% for deposit in recent_deposits %}
+                <li>
+                    {{ deposit.date|date:"Y-m-d H:i" }} —
+                    KES {{ deposit.amount }}  
+                    via {{ deposit.payment_method|title }}
+                </li>
+            {% endfor %}
             </ul>
         {% else %}
             <p>No deposits yet.</p>

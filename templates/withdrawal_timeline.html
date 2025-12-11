@@ -33,27 +33,29 @@
                 </tr>
             </thead>
             <tbody>
-                {% for entry in timeline %}
-                <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>{{ entry.member.full_name }}</td>
-                    <td>{{ entry.position }}</td>
-                    <td>{{ entry.scheduled_date|date:"M d, Y" }}</td>
-                    <td>
-                        {% if entry.is_current_turn %}
-                            <span style="color:green;font-weight:bold;">Current Turn</span>
-                        {% elif entry.scheduled_date < today %}
-                            <span style="color:gray;">Completed</span>
-                        {% else %}
-                            <span style="color:blue;">Upcoming</span>
-                        {% endif %}
-                    </td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="5" style="text-align:center;">No withdrawal schedule available.</td>
-                </tr>
-                {% endfor %}
+                {% if timeline %}
+                    {% for entry in timeline %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ entry.member.full_name }}</td>
+                        <td>{{ entry.position }}</td>
+                        <td>{{ entry.scheduled_date|date:"M d, Y" }}</td>
+                        <td>
+                            {% if entry.is_current_turn %}
+                                <span style="color:green;font-weight:bold;">Current Turn</span>
+                            {% elif entry.scheduled_date < today %}
+                                <span style="color:gray;">Completed</span>
+                            {% else %}
+                                <span style="color:blue;">Upcoming</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="5" style="text-align:center;">No withdrawal schedule available.</td>
+                    </tr>
+                {% endif %}
             </tbody>
         </table>
     </div>

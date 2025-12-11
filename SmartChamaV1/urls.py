@@ -16,6 +16,7 @@ urlpatterns = [
     path('member_list/',views.member_list,name='member_list'),
     path('statements/',views.statements,name='statements'),
     path('withdrawal_timeline/', views.withdrawal_timeline, name='withdrawal_timeline'),
-     path('callback/',views.mpesa_callback,name='mpesa_callback'),
-    path('stk_status/',views.stk_status_view,name='stk_status'),
+    path('mpesa/callback/',views.mpesa_callback,name='mpesa_callback'),
+    path('withdraw/request/', views.withdraw_request, name='withdraw_request'),
+   
 ]

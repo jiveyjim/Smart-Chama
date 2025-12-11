@@ -18,6 +18,11 @@ class MemberForm(forms.ModelForm):
             raise forms.ValidationError("Passwords do not match!!")    
         
 
+
 class PaymentForm(forms.Form):
-    phone_number = forms.CharField(label='Phone Number', max_length=15)
-    amount = forms.IntegerField(label='Amount', min_value=1)
+    amount = forms.DecimalField(min_value=1, max_digits=12, decimal_places=2)
+    phone_number = forms.CharField(max_length=20)
+
+class WithdrawalForm(forms.Form):
+    amount = forms.DecimalField(min_value=1, max_digits=12, decimal_places=2)
+    notes = forms.CharField(widget=forms.Textarea, required=False)

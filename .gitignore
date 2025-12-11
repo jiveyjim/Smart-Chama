@@ -7,12 +7,9 @@ __pycache__/
 
 # VS Code
 .vscode/ 
-<<<<<<< HEAD
-=======
 
 # Database
 *.db.sqlite3
 
 # Environment configuration file
-.envgit
->>>>>>> 3b38be6427e90d9efd0bf21ba52872ad1039b054
+.env

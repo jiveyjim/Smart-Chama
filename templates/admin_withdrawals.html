@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<!-- ADMIN NAVBAR -->
+<nav class="admin-nav">
+    <div class="admin-logo">Smart Chama Admin</div>
+    <ul>
+        <li><a href="{% url 'admin_home' %}">Dashboard</a></li>
+        <li><a href="{% url 'admin_members' %}">Members</a></li>
+        <li><a href="{% url 'admin_announcement' %}">Announcements</a></li>
+        <li><a href="{% url 'admin_email' %}">Email Members</a></li>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+    </ul>
+</nav>
+
+
+<!-- PAGE CONTENT -->
+<div class="container">
+    <h1 class="page-title">Withdrawal Requests</h1>
+    <p class="lead">Approve or decline withdrawal requests from members:</p>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="table-card">
+        <table class="members-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Member</th>
+                    <th>Amount (KES)</th>
+                    <th>Status</th>
+                    <th>Request Date</th>
+                    <th>Decision Date</th>
+                    <th>Admin Notes</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for w in withdrawals %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ w.member.full_name }}</td>
+                    <td>{{ w.amount|floatformat:2 }}</td>
+                    <td>{{ w.status }}</td>
+                    <td>{{ w.request_date|date:"Y-m-d H:i" }}</td>
+                    <td>{{ w.decision_date|default:"-"|date:"Y-m-d H:i" }}</td>
+                    <td>{{ w.admin_notes|default:"-" }}</td>
+                    <td>
+                        {% if w.status == "PENDING" %}
+                        <form method="POST" style="display:inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="request_id" value="{{ w.id }}">
+                            <input type="hidden" name="action" value="approve">
+                            <button type="submit" class="btn-primary">Approve</button>
+                        </form>
+                        <form method="POST" style="display:inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="request_id" value="{{ w.id }}">
+                            <input type="hidden" name="action" value="decline">
+                            <button type="submit" class="btn-danger">Decline</button>
+                        </form>
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="8" style="text-align:center; padding:20px; color:#666;">
+                        No withdrawal requests found.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock content %}

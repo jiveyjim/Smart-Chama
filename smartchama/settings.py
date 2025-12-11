@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -122,19 +125,25 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
+# settings.py
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/members/home/'  # optional, where user goes after login
+
+
+
+from pathlib import Path
 from dotenv import load_dotenv
 import os
-load_dotenv()
+load_dotenv()  
 
 MPESA_CONSUMER_KEY = os.getenv('MPESA_CONSUMER_KEY')
-MPESA_CONSUMER_SECRET = os.getenv('MPESA_CONSUMER_SECRET')  
+MPESA_CONSUMER_SECRET = os.getenv('MPESA_CONSUMER_SECRET')
 MPESA_SHORTCODE = os.getenv('MPESA_SHORTCODE')
 MPESA_PASSKEY = os.getenv('MPESA_PASSKEY')
-MPESA_ENVIRONMENT = os.getenv('MPESA_ENVIRONMENT')  # 'sandbox' or 'production'
+MPESA_ENVIRONMENT = os.getenv('MPESA_ENVIRONMENT', 'sandbox')
 MPESA_CALLBACK_URL = os.getenv('MPESA_CALLBACK_URL')
-MPESA_BASE_URL= os.getenv('MPESA_BASE_URL')
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-DEFAULT_FROM_EMAIL = "Smart Chama <your_email@gmail.com>"
+MPESA_BASE_URL = os.getenv('MPESA_BASE_URL')  # e.g. https://sandbox.safaricom.co.ke
+
 
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587

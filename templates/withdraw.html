@@ -19,22 +19,34 @@
 
 <!-- WITHDRAW SECTION -->
 <div class="container">
+
     <h1>Request a Withdrawal</h1>
     <h2>Welcome, {{ member.full_name }}</h2>
 
+    <!-- INLINE ERROR & SUCCESS MESSAGES FROM VIEW -->
+    {% if error %}
+        <div class="error-message">{{ error }}</div>
+    {% endif %}
+
+    {% if success %}
+        <div class="success-message">{{ success }}</div>
+    {% endif %}
+
+    <!-- WITHDRAW FORM -->
     <div class="form-card">
         <form method="POST" action="{% url 'withdraw' %}">
             {% csrf_token %}
 
             <div class="form-group">
                 <label for="amount">Withdrawal Amount (KES)</label>
-                <input type="number" id="amount" name="amount" placeholder="Enter amount to withdraw" required>
+                <input type="number" id="amount" name="amount"
+                       placeholder="Enter withdrawal amount" min="50" required>
             </div>
 
             <div class="form-group">
                 <label for="payment_method">Receive Funds Via</label>
                 <select id="payment_method" name="payment_method" required>
-                    <option value="" disabled selected>Select Payment Method</option>
+                    <option value="" disabled selected>Select Method</option>
                     <option value="mpesa">M-PESA</option>
                     <option value="bank">Bank Transfer</option>
                 </select>
@@ -42,34 +54,42 @@
 
             <div class="form-group">
                 <label for="notes">Notes (Optional)</label>
-                <input type="text" id="notes" name="notes" placeholder="Any additional info">
+                <input type="text" id="notes" name="notes"
+                       placeholder="Any additional instructions">
             </div>
 
             <button type="submit" class="btn-primary">Submit Withdrawal Request</button>
         </form>
     </div>
 
+    <!-- RULES -->
     <div class="announce">
         <h3>Withdrawal Rules</h3>
         <ul>
-            <li>Only members whose turn it is can withdraw.</li>
-            <li>After withdrawal, your position moves to the back of the queue.</li>
-            <li>Ensure your daily contributions are up to date before requesting withdrawal.</li>
+            <li>Only the member whose turn it is can request withdrawal.</li>
+            <li>After withdrawal is approved, you move to the end of the queue.</li>
+            <li>Your contributions must be updated before submitting a withdrawal request.</li>
         </ul>
     </div>
 
+    <!-- RECENT REQUESTS -->
     <div class="announce">
-        <h3>Recent Withdrawals</h3>
-        {% if recent_withdrawals %}
+        <h3>Recent Withdrawal Requests</h3>
+        {% if recent_requests %}
             <ul>
-                {% for withdrawal in recent_withdrawals %}
-                    <li>{{ withdrawal.date }} — KES {{ withdrawal.amount }} via {{ withdrawal.payment_method }}</li>
+                {% for req in recent_requests %}
+                    <li>
+                        {{ req.request_date|date:"Y-m-d H:i" }} — 
+                        KES {{ req.amount }} — 
+                        Status: {{ req.status }}
+                    </li>
                 {% endfor %}
             </ul>
         {% else %}
-            <p>No withdrawals yet.</p>
+            <p>No withdrawal requests found.</p>
         {% endif %}
     </div>
+
 </div>
 
 {% endblock content %}

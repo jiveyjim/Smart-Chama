@@ -17,9 +17,12 @@
     </ul>
 </nav>
 
+<!-- STATEMENTS SECTION -->
 <div class="container">
     <h1 class="page-title">My Statements</h1>
-    <p class="lead" style="text-align:center;">Review all your contributions and withdrawals below:</p>
+    <p class="lead" style="text-align:center;">
+        Review all your contributions and withdrawals below:
+    </p>
 
     <div class="table-card">
         <table class="members-table">
@@ -33,30 +36,37 @@
                     <th>Balance After</th>
                 </tr>
             </thead>
+
             <tbody>
                 {% if statements %}
                     {% for statement in statements %}
-                    <tr>
-                        <td>{{ forloop.counter }}</td>
-                        <td>
-                            {% if statement.transaction_type == 'deposit' %}
-                                <span style="color: green; font-weight:bold;">Deposit</span>
-                            {% else %}
-                                <span style="color: red; font-weight:bold;">Withdrawal</span>
-                            {% endif %}
-                        </td>
-                        <td>{{ statement.amount|floatformat:2 }}</td>
-                        <td>{{ statement.date|date:"M d, Y - h:i A" }}</td>
-                        <td>
-                            {% if statement.mpesa_ref %}
-                                {{ statement.mpesa_ref }}
-                            {% else %}
-                                {{ statement.notes }}
-                            {% endif %}
-                        </td>
-                        <td>{{ statement.balance_after|floatformat:2 }}</td>
-                    </tr>
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+
+                            <td>
+                                {% if statement.transaction_type == 'deposit' %}
+                                    <span style="color: green; font-weight: bold;">Deposit</span>
+                                {% else %}
+                                    <span style="color: red; font-weight: bold;">Withdrawal</span>
+                                {% endif %}
+                            </td>
+
+                            <td>{{ statement.amount|floatformat:2 }}</td>
+
+                            <td>{{ statement.date|date:"M d, Y - h:i A" }}</td>
+
+                            <td>
+                                {% if statement.mpesa_ref %}
+                                    {{ statement.mpesa_ref }}
+                                {% else %}
+                                    {{ statement.notes }}
+                                {% endif %}
+                            </td>
+
+                            <td>{{ statement.balance_after|floatformat:2 }}</td>
+                        </tr>
                     {% endfor %}
+
                 {% else %}
                     <tr>
                         <td colspan="6" style="text-align:center; padding:20px; color:#666;">

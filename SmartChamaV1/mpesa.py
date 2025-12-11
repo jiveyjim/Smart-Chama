@@ -1,99 +1,67 @@
-import requests,base64,os,datetime,os,re,json
+import os
+import base64
+import datetime
+import requests
+import re
 from dotenv import load_dotenv
+
+from django.conf import settings
+
 load_dotenv()
 
-MPESA_CONSUMER_KEY = os.getenv('MPESA_CONSUMER_KEY')
-MPESA_CONSUMER_SECRET = os.getenv('MPESA_CONSUMER_SECRET')  
+MPESA_BASE_URL = os.getenv('MPESA_BASE_URL')  # should be https://sandbox.safaricom.co.ke
 MPESA_SHORTCODE = os.getenv('MPESA_SHORTCODE')
 MPESA_PASSKEY = os.getenv('MPESA_PASSKEY')
-MPESA_ENVIRONMENT = os.getenv('MPESA_ENVIRONMENT')  # 'sandbox' or 'production'
+MPESA_CONSUMER_KEY = os.getenv('MPESA_CONSUMER_KEY')
+MPESA_CONSUMER_SECRET = os.getenv('MPESA_CONSUMER_SECRET')
 MPESA_CALLBACK_URL = os.getenv('MPESA_CALLBACK_URL')
-MPESA_BASE_URL= os.getenv('MPESA_BASE_URL')
-
 
 def generate_access_token():
-    try:
-        # 1. Base64 Encode Credentials
-        credentials = f"{MPESA_CONSUMER_KEY}:{MPESA_CONSUMER_SECRET}"
-        encoded_credentials = base64.b64encode(credentials.encode()).decode()
+    """Get OAuth token from Daraja (sandbox)."""
+    auth = (MPESA_CONSUMER_KEY, MPESA_CONSUMER_SECRET)
+    url = f"{MPESA_BASE_URL}/oauth/v1/generate?grant_type=client_credentials"
+    resp = requests.get(url, auth=auth, timeout=10)
+    resp.raise_for_status()
+    data = resp.json()
+    return data.get("access_token")
 
-        # 2. Define Request Headers
-        headers = {
-            "Authorization": f"Basic {encoded_credentials}",
-            "Content-Type": "application/json",
-        }
+def initiate_stk_push(phone, amount, account_reference="SmartChama", transaction_desc="Contribution"):
+    """
+    Initiate STK push. Returns response dict from Daraja.
+    phone must be in format 2547XXXXXXXX
+    """
+    token = generate_access_token()
+    timestamp = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
+    password = base64.b64encode(f"{MPESA_SHORTCODE}{MPESA_PASSKEY}{timestamp}".encode()).decode()
 
-        # 3. Send GET Request to Token Endpoint
-        response = requests.get(
-            f"{MPESA_BASE_URL}/oauth/v1/generate?grant_type=client_credentials",
-            headers=headers,
-        ).json()
+    print("STK Push URL:", stk_push_url)
 
-        # 4. Process Response
-        if "access_token" in response:
-            return response["access_token"]
-        else:
-            raise Exception("Access token missing in response.")
 
-    # 5. Handle Connection Errors
-    except requests.RequestException as e:
-        raise Exception(f"Failed to connect to M-Pesa: {str(e)}")
-    
+    payload = {
+        "BusinessShortCode": MPESA_SHORTCODE,
+        "Password": password,
+        "Timestamp": timestamp,
+        "TransactionType": "CustomerPayBillOnline",
+        "Amount": int(amount),
+        "PartyA": phone,
+        "PartyB": MPESA_SHORTCODE,
+        "PhoneNumber": phone,
+        "CallBackURL": MPESA_CALLBACK_URL,
+        "AccountReference": account_reference,
+        "TransactionDesc": transaction_desc
+    }
 
-def initiate_stk_push(phone, amount):
-    try:
-        # 1. Get Access Token
-        token = generate_access_token()
-
-        # 2. Define Request Headers using Bearer Token
-        headers = {
-            "Authorization": f"Bearer {token}",
-            "Content-Type": "application/json",
-        }
-
-        # 3. Prepare Security Credentials (STK Password)
-        timestamp = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
-        # The STK password is calculated by Base64 encoding the concatenation of
-        # Shortcode, Passkey, and Timestamp.
-        stk_password = base64.b64encode(
-            (MPESA_SHORTCODE + MPESA_PASSKEY + timestamp).encode()
-        ).decode()
-
-        # 4. Construct the Request Body (Payload)
-        request_body = {
-            "BusinessShortCode": MPESA_SHORTCODE,
-            "Password": stk_password,
-            "Timestamp": timestamp,
-            "TransactionType": "CustomerPayBillOnline", # Used for Lipa na M-Pesa
-            "Amount": amount,
-            "PartyA": phone, # The customer's phone number
-            "PartyB": MPESA_SHORTCODE, # The merchant's shortcode
-            "PhoneNumber": phone, # Same as PartyA
-            "CallBackURL": MPESA_CALLBACK_URL, # Endpoint M-Pesa calls after transaction
-            "AccountReference": "account", # Your internal account reference
-            "TransactionDesc": "Payment for goods",
-        }
-
-        # 5. Send POST Request to the STK Push Endpoint
-        response = requests.post(
-            f"{MPESA_BASE_URL}/mpesa/stkpush/v1/processrequest",
-            json=request_body,
-            headers=headers,
-        ).json()
-
-        return response
-
-    except Exception as e:
-        # Handle exceptions from token generation or request failure
-        print(f"STK Push failed: {e}")
-        return {"error": str(e)}
-
+    headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
+    url = f"{MPESA_BASE_URL}/mpesa/stkpush/v1/processrequest"
+    resp = requests.post(url, json=payload, headers=headers, timeout=15)
+    resp.raise_for_status()
+    return resp.json()
 
 def format_phone_number(phone):
-    phone = phone.replace("+", "")
-    if re.match(r"^254\d{9}$", phone):
+    phone = phone.strip().replace("+", "").replace(" ", "")
+    # Accept 07XXXXXXXX or 2547XXXXXXXX
+    if re.match(r"^2547\d{8}$", phone):
         return phone
-    elif phone.startswith("0") and len(phone) == 10:
+    if re.match(r"^07\d{8}$", phone):
         return "254" + phone[1:]
-    else:
-        raise ValueError("Invalid phone number format")
+    raise ValueError("Invalid phone number format (use 07XXXXXXXX or +2547XXXXXXXX).")

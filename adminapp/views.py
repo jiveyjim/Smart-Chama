@@ -3,6 +3,9 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required, user_passes_test
+from SmartChamaV1.models import WithdrawalRequest, ChamaMember
+
 
 # ------------------ HELPER ------------------
 def is_admin(user):
@@ -75,3 +78,38 @@ def admin_announcement(request):
 def admin_email(request):
     # Fetch email history or send email logic
     return render(request, 'admin_email.html')
+
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+def admin_withdrawals(request):
+    pending = WithdrawalRequest.objects.select_related('member').filter(status='PENDING').order_by('request_date')
+    return render(request, 'admin_withdrawals.html', {'pending': pending})
+
+
+@login_required
+@user_passes_test(is_admin)
+def admin_withdrawals(request):
+    """
+    Display all withdrawal requests for admin review.
+    Admin can approve or decline withdrawals.
+    """
+    withdrawals = WithdrawalRequest.objects.all().order_by('-request_date')
+
+    if request.method == 'POST':
+        request_id = request.POST.get('request_id')
+        action = request.POST.get('action')
+        admin_notes = request.POST.get('admin_notes', '')
+
+        withdrawal = WithdrawalRequest.objects.get(id=request_id)
+        if action == "approve":
+            withdrawal.status = "APPROVED"
+        elif action == "decline":
+            withdrawal.status = "DECLINED"
+
+        withdrawal.admin_notes = admin_notes
+        withdrawal.decision_date = timezone.now()
+        withdrawal.save()
+
+        return redirect('admin_withdrawals')
+
+    return render(request, 'admin_withdrawals.html', {'withdrawals': withdrawals})
