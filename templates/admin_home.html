@@ -1,25 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="static/css/styles.css">
-</head>
-<body>
-    <nav class="navbar">
-        <div class="logo">Smart Chama Admin</div>
-        <ul>
-            <li><a href="{% url 'admin_members'%}">Members</a></li>
-            <li><a href="{% url 'admin_announcement'%}">Announcements</a></li>
-            <li><a href="{% url 'admin_email'%}">Email Members</a></li>
-            <li><a href="{% url 'logout'%}">Logout</a></li>
-        </ul>
-    </nav>
+{% extends 'base.html' %}
+{% load static %}
 
-    <div class="container">
-        <h1>Admin Dashboard</h1>
+{% block content %}
 
-        <p class="subtitle">Welcome, Admin. Use the navbar to manage the system.</p>
+<!-- ADMIN NAVBAR -->
+<nav class="admin-nav">
+    <div class="admin-logo">Smart Chama Admin</div>
+    <ul>
+        <li><a href="{% url 'admin_members' %}">Members</a></li>
+        <li><a href="{% url 'admin_announcement' %}">Announcements</a></li>
+        <li><a href="{% url 'admin_email' %}">Email Members</a></li>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+    </ul>
+</nav>
+
+<div class="admin-container">
+
+    <h1 class="page-title">Dashboard</h1>
+
+    <!-- STATS CARDS -->
+    <div class="stats-cards">
+        <div class="card">
+            <h3>Total Members</h3>
+            <p>25</p>
+        </div>
+        <div class="card">
+            <h3>Total Contributions</h3>
+            <p>KES 1,250,000</p>
+        </div>
+        <div class="card">
+            <h3>Next Withdrawal</h3>
+            <p>John Doe - 15 Dec 2025</p>
+        </div>
     </div>
-</body>
-</html>
+
+    <!-- QUICK ACTIONS -->
+    <div class="quick-actions">
+       <a href="{% url 'admin_members' %}" class="btn-primary" >Add Member</a>
+       <a href="{% url 'admin_announcement' %}" class="btn-primary">Post Announcement</a>
+       <a href="{% url 'admin_email' %}" class="btn-primary">Send Email</a>
+    </div>
+
+
+    <!-- RECENT ACTIVITIES -->
+    <h2 class="section-title">Recent Activities</h2>
+
+    <div class="table-card">
+        <table class="activities-table">
+            <thead>
+                <tr>
+                    <th>Member</th>
+                    <th>Activity</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>John Doe</td>
+                    <td>Deposit</td>
+                    <td>KES 5,000</td>
+                    <td>10 Dec 2025</td>
+                </tr>
+                <tr>
+                    <td>Mary Atieno</td>
+                    <td>Withdrawal</td>
+                    <td>KES 25,000</td>
+                    <td>9 Dec 2025</td>
+                </tr>
+                <tr>
+                    <td>Peter Okello</td>
+                    <td>Deposit</td>
+                    <td>KES 5,000</td>
+                    <td>8 Dec 2025</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}

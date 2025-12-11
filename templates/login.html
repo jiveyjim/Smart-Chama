@@ -1,33 +1,43 @@
- {% extends 'base.html' %}
-  {% load static %}
+{% extends 'base.html' %}
+{% load static %}
 
-   {% block content %}
+{% block content %}
 
-   
+<div class="login-container">
+    <div class="login-card">
+        <h2 class="login-title">Member Login</h2>
+        <p class="login-subtitle">Enter your credentials to access your Smart Chama account.</p>
 
-    <div class="auth-container">
-     <h2>Login</h2>
-      <form method='POST'>
-        {% csrf_token %}
+        <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
 
-        {% if messages %}
-            <ul class="messages">
-               {% for message in messages %}
-                  <li class="{{ message.tags }}"style="color: red;">{{ message }}</li>
-               {% endfor %}
-            </ul>
-        {% endif %}
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li class="{{ message.tags }}" style="color: red;">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
 
-        <label for="username">Email or Phone Number</label>
-          <input type="text" id="username" name="identifier" placeholder="Enter Email or Phone Number" required />
-        <label for="password">Password</label>
-          <input type="password" id="password" name="password" placeholder="Enter Password" required />
+            <div class="form-group">
+                <label for="username">Email or Phone Number</label>
+                <input type="text" id="username" name="identifier" placeholder="Enter Email or Phone Number" required>
+            </div>
 
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter Password" required>
+            </div>
 
-       <button type="submit">Login</button>
-      </form>
-      <br>
-      <p>Don't have an account? <a href="{% url 'signup' %}">Sign up</a></p>
-      <a href="{% url 'forget password' %}">Forgot your password?</a>
+            <button type="submit" class="btn-primary">Login</button>
+        </form>
+
+        <div class="forgot-password" style="margin-top: 15px;">
+            <a href="{% url 'forget password' %}">Forgot your password?</a>
+        </div>
+
+        <p style="margin-top: 20px;">Don't have an account? <a href="{% url 'signup' %}">Sign up</a></p>
     </div>
-   {% endblock content %}
+</div>
+
+{% endblock content %}

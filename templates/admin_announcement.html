@@ -1,39 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Admin Announcements</title>
-    <link rel="stylesheet" href="static/css/styles.css">
-</head>
-<body>
-    <nav class="navbar">
-        <div class="logo">Smart Chama Admin</div>
-        <ul>
-            <li><a href="{% url 'admin_home'%}">Dashboard</a></li>
-            <li><a href="{% url 'admin_members'%}">Members</a></li>
-            <li><a href="{% url 'admin_email'%}">Email Members</a></li>
-            <li><a href="{% url 'logout'%}">Logout</a></li>
-        </ul>
-    </nav>
+{% extends 'base.html' %}
+{% load static %}
 
-    <div class="container">
-        <h1>Create Announcement</h1>
+{% block content %}
 
+<!-- ADMIN NAVBAR -->
+<nav class="admin-nav">
+    <div class="admin-logo">Smart Chama Admin</div>
+    <ul>
+        <li><a href="{% url 'admin_home' %}">Dashboard</a></li>
+        <li><a href="{% url 'admin_members' %}">Members</a></li>
+        <li><a href="{% url 'admin_email' %}">Email Members</a></li>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+    </ul>
+</nav>
+
+<div class="admin-container">
+
+    <h1 class="page-title">Create Announcement</h1>
+
+    <div class="form-card">
         <form>
-            <label>Announcement Title</label>
-            <input type="text">
+            <div class="form-group">
+                <label>Announcement Title</label>
+                <input type="text" placeholder="Enter announcement title">
+            </div>
 
-            <label>Message</label>
-            <textarea rows="5"></textarea>
+            <div class="form-group">
+                <label>Message</label>
+                <textarea rows="5" placeholder="Write your announcement here..."></textarea>
+            </div>
 
             <button class="btn-primary">Post Announcement</button>
         </form>
-
-        <h2>Past Announcements</h2>
-        <ul class="announcement-list">
-            <li><strong>System Update:</strong> Meeting on Friday at 9AM</li>
-            <li><strong>Reminder:</strong> Deposit your daily contribution</li>
-        </ul>
     </div>
-</body>
-</html>
+
+    <h2 class="section-title">Past Announcements</h2>
+
+    <div class="announcement-list">
+
+        <!-- Example announcement -->
+        <div class="announcement-item">
+            <h3>System Upgrade Notice</h3>
+            <p>We will have a scheduled system upgrade this Friday at 10 pm.</p>
+            <span class="date">Posted on: 5 Jan 2025</span>
+        </div>
+
+        <div class="announcement-item">
+            <h3>Monthly Meeting</h3>
+            <p>Reminder that our monthly meeting will be held on 10th Jan at 6PM.</p>
+            <span class="date">Posted on: 1 Jan 2025</span>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

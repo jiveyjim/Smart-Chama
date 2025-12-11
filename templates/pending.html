@@ -1,43 +1,47 @@
-{% load bootstrap5 %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% bootstrap_css %}
+{% extends 'base.html' %}
+{% load static %}
 
-    <title>Pending Page</title>
-</head>
-<body
-class="d-flex align-items-center justify-content-center vh-100 bg-light">
-    
-<div class="card shadow-sm p-5" style="max-width: 600px; width: 100%">
-    <h3 class="text-center mb-4" id="confirm-text">Confirm Your Payment</h3>
-    <h5 class="text-center mt-3" id="status-container">
-        <div class="alert alert-info d-flex align-items-center justify-content-center"
-             role="alert"
-             id="initial-message">
+{% block content %}
+
+<div class="auth-container" style="max-width: 600px; margin: 50px auto; text-align: center;">
+    <h2>Confirm Your Payment</h2>
+
+    <div id="status-container" style="margin-top: 20px;">
+        <div class="announcement-item" id="initial-message">
             M-Pesa STK Push sent successfully. Enter your M-Pesa PIN to complete the transaction.
         </div>
-    </h5>
-    <div>
-        <div class="spinner-border text-primary" role="status" id="loading-spinner">
-            <span class="visually-hidden">Loading...</span>
-        </div>
-        <p class="mt-2" id="status-message">Waiting for confirmation...</p>
     </div>
-    <div class="d-flex justify-content-center mt-4">
-        <a href="javascript:void(0);"
-           class="btn btn-warning"
-           id="retry-button"
-           style="display: none"
-           onclick="location.reload();"
-        >
-        Retry Payment
-        </a>
+
+    <div style="margin-top: 30px;">
+        <div class="spinner" id="loading-spinner" style="margin-bottom: 10px;">
+            <div class="loader"></div>
+        </div>
+        <p id="status-message">Waiting for confirmation...</p>
+    </div>
+
+    <div style="margin-top: 30px;">
+        <button id="retry-button" class="btn-primary" style="display: none;" onclick="location.reload();">
+            Retry Payment
+        </button>
     </div>
 </div>
 
-{% bootstrap_javascript %}
-</body>
-</html>
+<style>
+/* Simple spinner using only CSS */
+.spinner .loader {
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #fbbf24;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
+
+{% endblock content %}

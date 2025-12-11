@@ -1,45 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Members List - Smart Chama</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
 
-<div class="navbar">
-    <a href="{% url 'member_home'%}">Home</a>
-    <a href="{% url 'deposit'%}">Deposit</a>
-    <a href="{% url 'withdraw'%}">Withdraw</a>
-    <a href="{% url 'statements'%}">Statements</a>
-    <a href="{% url 'withdrawal_timeline'%}">Withdrawal Timeline</a>
-</div>
+{% block content %}
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="logo">Smart Chama</div>
+    <ul>
+        <li><a href="{% url 'member_home' %}" id="btn-nav">Home</a></li>
+        <li><a href="{% url 'deposit' %}" id="btn-nav">Deposit</a></li>
+        <li><a href="{% url 'withdraw' %}" id="btn-nav">Withdraw</a></li>
+        <li><a href="{% url 'member_list' %}" id="btn-nav">Members</a></li>
+        <li><a href="{% url 'statements' %}" id="btn-nav">Statements</a></li>
+        <li><a href="{% url 'withdrawal_timeline' %}" id="btn-nav">Withdrawal Timeline</a></li>
+        <li><a href="{% url 'logout' %}" id="btn-nav">Log Out</a></li>
+    </ul>
+</nav>
 
 <div class="container">
-    <h2>All Members</h2>
+    <h1>Members List</h1>
+    <p>Below are all active members of Smart Chama:</p>
 
-    <table>
-        <tr>
-            <th>#</th>
-            <th>Full Name</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th>ID Number</th>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>Example Member</td>
-            <td>0712345678</td>
-            <td>example@gmail.com</td>
-            <td>12345678</td>
-        </tr>
-        <!-- More rows will be added dynamically in Django -->
-    </table>
+    <div class="table-card">
+        <table class="members-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>National ID</th>
+                    <th>Joined On</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for member in members %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ member.full_name }}</td>
+                    <td>{{ member.email }}</td>
+                    <td>{{ member.phone_number }}</td>
+                    <td>{{ member.idNumber }}</td>
+                    <td>{{ member.date_joined|date:"M d, Y" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" style="text-align:center;">No members found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 
-</body>
-<<<<<<< HEAD
-</html>
-=======
-</html>
->>>>>>> c91a1984a3d335cfd1415b30c527d92c1568f37c
+{% endblock content %}

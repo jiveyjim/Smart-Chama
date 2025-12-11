@@ -1,65 +1,99 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Admin - Manage Members</title>
-    <link rel="stylesheet" href="static/css/styles.css">
-</head>
-<body>
-    <nav class="navbar">
-        <div class="logo">Smart Chama Admin</div>
-        <ul>
-            <li><a href="{% url 'admin_home'%}">Dashboard</a></li>
-            <li><a href="{% url 'admin_announcement'%}">Announcements</a></li>
-            <li><a href="{% url 'admin_email'%}">Email Members</a></li>
-            <li><a href="{% url 'logout'%}">Logout</a></li>
-        </ul>
-    </nav>
+{% extends 'base.html' %}
+{% load static %}
 
-    <div class="container">
-        <h1>Manage Members</h1>
+{% block content %}
 
-        <h3>Add New Member</h3>
+<!-- ADMIN NAVBAR -->
+<nav class="admin-nav">
+    <div class="admin-logo">Smart Chama Admin</div>
+    <ul>
+        <li><a href="{% url 'admin_home' %}">Dashboard</a></li>
+        <li><a href="{% url 'admin_announcement' %}">Announcements</a></li>
+        <li><a href="{% url 'admin_email' %}">Email Members</a></li>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+    </ul>
+</nav>
 
+<div class="admin-container">
+
+    <h1 class="page-title">Manage Members</h1>
+
+    <!-- ADD NEW MEMBER FORM -->
+    <div class="form-card">
+        <h2 class="section-title">Add New Member</h2>
         <form>
-            <label>Full Name</label>
-            <input type="text">
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" placeholder="Enter full name">
+            </div>
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="text" placeholder="0712345678">
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" placeholder="email@example.com">
+            </div>
+            <div class="form-group">
+                <label>ID Number</label>
+                <input type="text" placeholder="Enter ID Number">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <label>Confirm Password</label>
+                <input type="password" placeholder="Re-enter password">
+            </div>
 
-            <label>Phone Number</label>
-            <input type="text">
-
-            <label>Email</label>
-            <input type="email">
-
-            <label>ID Number</label>
-            <input type="text">
-
-            <button class="btn-primary" type="submit">Add Member</button>
+            <button class="btn-primary">Add Member</button>
         </form>
+    </div>
 
-        <h3>Existing Members</h3>
-        <table>
+    <!-- MEMBERS LIST -->
+    <h2 class="section-title">All Members</h2>
+
+    <div class="table-card">
+        <table class="members-table">
             <thead>
                 <tr>
-                    <th>Name</th>
+                    <th>Full Name</th>
                     <th>Phone</th>
                     <th>Email</th>
-                    <th>ID</th>
-                    <th>Action</th>
+                    <th>ID Number</th>
+                    <th>Joined Date</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
-
             <tbody>
+                <!-- Example rows -->
                 <tr>
-                    <td>Example Member</td>
-                    <td>0700000000</td>
-                    <td>example@gmail.com</td>
+                    <td>John Doe</td>
+                    <td>0712345678</td>
+                    <td>john@example.com</td>
                     <td>12345678</td>
-                    <td><button class="btn-danger">Remove</button></td>
+                    <td>12 Jan 2023</td>
+                    <td>
+                        <button class="btn-edit">Edit</button>
+                        <button class="btn-delete">Remove</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Mary Atieno</td>
+                    <td>0798765432</td>
+                    <td>mary@example.com</td>
+                    <td>87654321</td>
+                    <td>15 Feb 2023</td>
+                    <td>
+                        <button class="btn-edit">Edit</button>
+                        <button class="btn-delete">Remove</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
-
     </div>
-</body>
-</html>
+
+</div>
+
+{% endblock %}

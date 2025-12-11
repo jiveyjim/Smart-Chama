@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'SmartChamaV1',
     'adminapp',
-    'bootstrap5'
+
 ]
 
 MIDDLEWARE = [

@@ -1,28 +1,66 @@
-{% load bootstrap5 %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Deposit Funds - Smart Chama</title>
-    {% bootstrap_css %}
-</head>
-<body class="d-flex align-items-center justify-content-center vh-100 bg-light">
-    <div class="card p-4 shadow-sm" style="width: 100%;max-width: 500px;">
-        <h3 class="text-center mb-4">Make a Payment</h3>
-        {% if error_message%}
-        
-        <div class="alert alert-danger">{{error_message}}</div>
-        {%endif%}
-        <form method="post" class="needs-validation" novalidate>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="logo">Smart Chama</div>
+    <ul>
+        <li><a href="{% url 'member_home' %}" id="btn-nav">Home</a></li>
+        <li><a href="{% url 'deposit' %}" id="btn-nav">Deposit</a></li>
+        <li><a href="{% url 'withdraw' %}" id="btn-nav">Withdraw</a></li>
+        <li><a href="{% url 'member_list' %}" id="btn-nav">Members</a></li>
+        <li><a href="{% url 'statements' %}" id="btn-nav">Statements</a></li>
+        <li><a href="{% url 'withdrawal_timeline' %}" id="btn-nav">Withdrawal Timeline</a></li>
+        <li><a href="{% url 'logout' %}" id="btn-nav">Log Out</a></li>
+    </ul>
+</nav>
+
+<!-- DEPOSIT SECTION -->
+<div class="container">
+    <h1>Make a Deposit</h1>
+    <h2>Welcome, {{ member.full_name }}</h2>
+
+    <div class="form-card">
+        <form method="POST" action="{% url 'deposit' %}">
             {% csrf_token %}
-            {%for field in form%}
-            <div class="mb-3">
-                {% bootstrap_field field %}
+            
+            <div class="form-group">
+                <label for="amount">Deposit Amount (KES)</label>
+                <input type="number" id="amount" name="amount" placeholder="Enter deposit amount" required>
             </div>
-            {%endfor%}
-            <button type="submit" class="btn btn-primary w-100">Pay Now</button>
+
+            <div class="form-group">
+                <label for="payment_method">Payment Method</label>
+                <select id="payment_method" name="payment_method" required>
+                    <option value="" disabled selected>Select Payment Method</option>
+                    <option value="mpesa">M-PESA STK Push</option>
+                    <option value="manual">Manual Deposit</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="transaction_id">Transaction ID (if applicable)</label>
+                <input type="text" id="transaction_id" name="transaction_id" placeholder="Enter transaction ID for M-PESA or leave blank for manual deposit">
+            </div>
+
+            <button type="submit" class="btn-primary">Submit Deposit</button>
         </form>
     </div>
-    {% bootstrap_javascript %}
-</body>
-</html>
+
+    <div class="announce">
+        <h3>Recent Deposits</h3>
+        {% if recent_deposits %}
+            <ul>
+                {% for deposit in recent_deposits %}
+                    <li>{{ deposit.date }} — KES {{ deposit.amount }} via {{ deposit.payment_method }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No deposits yet.</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock content %}

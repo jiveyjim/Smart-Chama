@@ -60,15 +60,9 @@ def login(request):
                 request.session['member_name'] = member.full_name
                 return redirect('member_home')
             else:
-<<<<<<< HEAD
                 messages.error(request, "Incorrect password")
         else:
             messages.error(request, "Email or phone number not found")
-=======
-                messages.error(request,"Incorrect Password")
-    else:
-        messages.error(request,"Not account found with that email/phone number")                       
->>>>>>> 3b38be6427e90d9efd0bf21ba52872ad1039b054
 
     return render(request, 'login.html')
 
@@ -91,23 +85,8 @@ def logout(request):
     return redirect('index')
 
 
-def admin_announcement(request):
-    return render(request, 'admin_announcement.html')
-
-def admin_email(request):
-    return render(request, 'admin_email.html')
-
 def base(request):
     return render(request, 'base.html')
-
-def admin_home(request):
-    return render(request, 'admin_home.html')
-
-def admin_login(request):
-    return render(request, 'admin_login.html')
-
-def admin_members(request):
-    return render(request, 'admin_members.html')
 
 def deposit(request):
     if request.method=='POST':
@@ -140,8 +119,6 @@ def statements(request):
 
 def withdrawal_timeline(request):
     return render(request, 'withdrawal_timeline.html')
-<<<<<<< HEAD
-=======
 
 @csrf_exempt
 def mpesa_callback(request):
@@ -230,4 +207,3 @@ def stk_status_view(request):
             return JsonResponse({"status": status})
         except json.JSONDecodeError:
             return JsonResponse({"error": "Invalid JSON body"}, status=400)
->>>>>>> 3b38be6427e90d9efd0bf21ba52872ad1039b054

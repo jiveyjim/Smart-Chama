@@ -1,35 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Email Members</title>
-    <link rel="stylesheet" href="static/css/styles.css">
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
 
-    <nav class="navbar">
-        <div class="logo">Smart Chama Admin</div>
-        <ul>
-            <li><a href="{% url 'admin_home'%}">Dashboard</a></li>
-            <li><a href="{% url 'admin_members'%}">Members</a></li>
-            <li><a href="{% url 'admin_announcement'%}">Announcements</a></li>
-            <li><a href="{% url 'logout'%}">Logout</a></li>
-        </ul>
-    </nav>
+{% block content %}
 
-    <div class="container">
-        <h1>Email All Members</h1>
+<!-- ADMIN NAVBAR -->
+<nav class="admin-nav">
+    <div class="admin-logo">Smart Chama Admin</div>
+    <ul>
+        <li><a href="{% url 'admin_home' %}">Dashboard</a></li>
+        <li><a href="{% url 'admin_members' %}">Members</a></li>
+        <li><a href="{% url 'admin_announcement' %}">Announcements</a></li>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+    </ul>
+</nav>
 
+<div class="admin-container">
+
+    <h1 class="page-title">Email Members</h1>
+
+    <!-- EMAIL FORM -->
+    <div class="form-card">
         <form>
-            <label>Subject</label>
-            <input type="text">
 
-            <label>Message</label>
-            <textarea rows="7"></textarea>
+            <!-- Recipient -->
+            <div class="form-group">
+                <label>Send To</label>
+                <select>
+                    <option>All Members</option>
+                    <option>Single Member</option>
+                    <option>Custom Email Address</option>
+                </select>
+            </div>
+
+            <!-- If single member selected, backend will insert dynamic list -->
+            <div class="form-group">
+                <label>Member (Optional)</label>
+                <select>
+                    <option>Select a Member</option>
+                    <option>John Doe - 0712345678</option>
+                    <option>Mary Atieno - 0798765432</option>
+                </select>
+            </div>
+
+            <!-- Subject -->
+            <div class="form-group">
+                <label>Email Subject</label>
+                <input type="text" placeholder="Enter email subject">
+            </div>
+
+            <!-- Message -->
+            <div class="form-group">
+                <label>Email Message</label>
+                <textarea rows="6" placeholder="Type your message..."></textarea>
+            </div>
 
             <button class="btn-primary">Send Email</button>
         </form>
     </div>
 
-</body>
-</html>
+    <!-- PAST EMAILS -->
+    <h2 class="section-title">Email History</h2>
+
+    <div class="email-history">
+
+        <div class="email-item">
+            <h3>System Maintenance Notice</h3>
+            <p>Dear members, please note we will have downtime tonight at 10PM.</p>
+            <span class="date">Sent on: 3 Jan 2025</span>
+        </div>
+
+        <div class="email-item">
+            <h3>Reminder: Monthly Contribution</h3>
+            <p>This is a reminder to ensure all members deposit their weekly contribution by Friday.</p>
+            <span class="date">Sent on: 28 Dec 2024</span>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
